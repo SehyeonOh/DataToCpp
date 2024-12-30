@@ -85,13 +85,11 @@ namespace data2cpp {
         table_ = ParquetToArrowTable(source_file);
         batch_ = ArrowTableToSingleRecordBatch(table_);
         array_ = batch_->GetColumnByName(column_name_);
-        
         // List 타입인지 확인
         if (array_->type()->id() == arrow::Type::LIST) {
             auto list_array = std::static_pointer_cast<arrow::ListArray>(array_);
             auto values = list_array->values();
-            raw_data_ = values->data()->GetValues<uint8_t>(0, 0);
-            
+            raw_data_ = values->data()->GetValues<uint8_t>(1, 0);
             row_count_ = array_->length();
             width_ = list_array->value_length(0);
             element_size_ = values->type()->bit_width() / 8;
@@ -100,8 +98,7 @@ namespace data2cpp {
         else if (array_->type()->id() == arrow::Type::FIXED_SIZE_LIST) {
             auto fixed_list_array = std::static_pointer_cast<arrow::FixedSizeListArray>(array_);
             auto values = fixed_list_array->values();
-            raw_data_ = values->data()->GetValues<uint8_t>(0, 0);
-            
+            raw_data_ = values->data()->GetValues<uint8_t>(1, 0);
             row_count_ = array_->length();
             width_ = fixed_list_array->list_type()->list_size();
             element_size_ = values->type()->bit_width() / 8;
@@ -130,8 +127,8 @@ namespace data2cpp {
         return ss.str();
     }
 
-    const uint8_t *Parquet2Cpp::GetRawColumnData() {
-        return raw_data_;
+    const uint8_t *Parquet2Cpp::GetRawData(int64_t row_index) {
+        return raw_data_ + row_index * width_ * element_size_;
     }
 
     int64_t Parquet2Cpp::GetRowCount() {

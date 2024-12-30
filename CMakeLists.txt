@@ -19,6 +19,8 @@ pkg_check_modules(ARROW REQUIRED IMPORTED_TARGET arrow parquet)
 # 라이브러리 소스 파일 설정
 add_library(data2cpp
     data2cpp/parquet/parquet2cpp.cc
+    data2cpp/binary/binary2cpp.cc
+    data2cpp/vecs/vecs2cpp.cc
 )
 
 # 헤더 파일 및 라이브러리 링크 설정
@@ -35,3 +37,19 @@ target_link_libraries(data2cpp
 
 # examples 디렉토리 추가
 add_subdirectory(examples) 
+
+# 소스 파일 목록
+set(SOURCES
+    data2cpp/common/data2cpp.cc
+    data2cpp/parquet/parquet2cpp.cc
+    data2cpp/binary/binary2cpp.cc
+    data2cpp/vecs/vecs2cpp.cc
+)
+
+# 헤더 파일 목록
+set(HEADERS
+    data2cpp/common/data2cpp.hh
+    data2cpp/parquet/parquet2cpp.hh
+    data2cpp/binary/binary2cpp.hh
+    data2cpp/vecs/vecs2cpp.hh
+) 

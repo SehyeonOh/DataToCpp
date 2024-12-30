@@ -19,6 +19,18 @@ int main(int argc, char* argv[]) {
         std::cout << "Parquet 파일 정보:" << std::endl;
         std::cout << parquet_reader.ToString(true) << std::endl;
 
+        RAW_DATA_DEFAULT(auto data, float, &parquet_reader);
+        std::cout << "data: " << std::endl;
+        for (int64_t i = 0; i < parquet_reader.GetWidth(); i++) {
+            std::cout << data[i] << " ";
+        }
+        std::cout << std::endl;
+        RAW_DATA(auto data10, float, &parquet_reader, 10);
+        std::cout << "data10: " << std::endl;
+        for (int64_t i = 0; i < parquet_reader.GetWidth(); i++) {
+            std::cout << data10[i] << " ";
+        }
+        std::cout << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "에러 발생: " << e.what() << std::endl;
         return 1;

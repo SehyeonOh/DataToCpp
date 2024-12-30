@@ -16,11 +16,11 @@ namespace data2cpp {
         Parquet2Cpp(std::string source_file, std::string column_name);
         ~Parquet2Cpp() = default;
 
-        const uint8_t *GetRawColumnData() override;
+        const uint8_t *GetRawData(int64_t row_index = 0) override;
         int64_t GetRowCount() override;
         int64_t GetWidth() override;
         int64_t GetElementSize() override;
-        std::string GetElementType() override;
+        std::string GetElementType();
 
         std::string ToString(bool verbose) override;
 

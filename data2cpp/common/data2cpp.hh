@@ -8,15 +8,21 @@ namespace data2cpp {
         virtual ~Data2Cpp() = default;
 
         // only support fixed sized list array for now
-        virtual const uint8_t *GetRawColumnData() = 0;
+        virtual const uint8_t *GetRawData(int64_t row_index = 0) = 0;
         virtual int64_t GetRowCount() = 0;
         virtual int64_t GetWidth() = 0;
         virtual int64_t GetElementSize() = 0;
-        virtual std::string GetElementType() = 0;
 
         virtual std::string ToString(bool verbose = false) = 0;
     protected:
         std::string source_file_;
         std::string column_name_;
     };
+
+    // 데이터 접근을 위한 매크로
+    #define RAW_DATA(lhs, type, class_ptr, row_index) \
+        lhs = reinterpret_cast<const type*>((class_ptr)->GetRawData(row_index))
+
+    #define RAW_DATA_DEFAULT(lhs, type, class_ptr) \
+        RAW_DATA(lhs, type, class_ptr, 0)
 }

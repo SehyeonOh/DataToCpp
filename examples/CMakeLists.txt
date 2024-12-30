@@ -10,9 +10,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # parquet2cpp_test 실행 파일 생성
 add_executable(parquet2cpp_test parquet2cpp_test.cc)
+add_executable(binary2cpp_test binary2cpp_test.cc)
+add_executable(vecs2cpp_test vecs2cpp_test.cc)
 
 # data2cpp 라이브러리 링크 (상위 CMakeLists.txt에서 이미 정의된 타겟 사용)
 target_link_libraries(parquet2cpp_test PRIVATE data2cpp)
+target_link_libraries(binary2cpp_test PRIVATE data2cpp)
+target_link_libraries(vecs2cpp_test PRIVATE data2cpp)
 
 # 헤더 파일 경로 설정
-target_include_directories(parquet2cpp_test PRIVATE ${CMAKE_SOURCE_DIR}) 
+target_include_directories(parquet2cpp_test PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(binary2cpp_test PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(vecs2cpp_test PRIVATE ${CMAKE_SOURCE_DIR}) 
