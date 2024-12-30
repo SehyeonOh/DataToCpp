@@ -1,24 +1,24 @@
-# 최소 CMake 버전 설정
+# Set minimum CMake version
 cmake_minimum_required(VERSION 3.10)
 
-# 예제 프로젝트 이름 설정
+# Set example project name
 project(parquet2cpp_examples)
 
-# C++ 표준 설정
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# parquet2cpp_test 실행 파일 생성
+# data2cpp_test
 add_executable(parquet2cpp_test parquet2cpp_test.cc)
 add_executable(binary2cpp_test binary2cpp_test.cc)
 add_executable(vecs2cpp_test vecs2cpp_test.cc)
 
-# data2cpp 라이브러리 링크 (상위 CMakeLists.txt에서 이미 정의된 타겟 사용)
+# Link data2cpp library (using target already defined in parent CMakeLists.txt)
 target_link_libraries(parquet2cpp_test PRIVATE data2cpp)
 target_link_libraries(binary2cpp_test PRIVATE data2cpp)
 target_link_libraries(vecs2cpp_test PRIVATE data2cpp)
 
-# 헤더 파일 경로 설정
+# Set header file paths
 target_include_directories(parquet2cpp_test PRIVATE ${CMAKE_SOURCE_DIR})
 target_include_directories(binary2cpp_test PRIVATE ${CMAKE_SOURCE_DIR})
 target_include_directories(vecs2cpp_test PRIVATE ${CMAKE_SOURCE_DIR}) 
