@@ -85,7 +85,17 @@ namespace data2cpp {
         table_ = ParquetToArrowTable(source_file);
         batch_ = ArrowTableToSingleRecordBatch(table_);
         array_ = batch_->GetColumnByName(column_name_);
-        // List 타입인지 확인
+
+        if (array_ == nullptr) {
+            std::stringstream ss;
+            ss << "Columns: " ;
+            for (int i = 0; i < batch_->num_columns(); i++) {
+                ss << batch_->column_name(i) << " ";
+            }
+            throw std::runtime_error("Column not found in the Parquet file: " + column_name_ + ". Columns: " + ss.str());
+        }
+
+        // Check if the column is a list type
         if (array_->type()->id() == arrow::Type::LIST) {
             auto list_array = std::static_pointer_cast<arrow::ListArray>(array_);
             auto values = list_array->values();
@@ -94,7 +104,16 @@ namespace data2cpp {
             width_ = list_array->value_length(0);
             element_size_ = values->type()->bit_width() / 8;
             element_type_ = values->type()->ToString();
-        } 
+        }
+        else if (array_->type()->id() == arrow::Type::LARGE_LIST) {
+            auto large_list_array = std::static_pointer_cast<arrow::LargeListArray>(array_);
+            auto values = large_list_array->values();
+            raw_data_ = values->data()->GetValues<uint8_t>(1, 0);
+            row_count_ = array_->length();
+            width_ = large_list_array->value_length(0);
+            element_size_ = values->type()->bit_width() / 8;
+            element_type_ = values->type()->ToString();
+        }
         else if (array_->type()->id() == arrow::Type::FIXED_SIZE_LIST) {
             auto fixed_list_array = std::static_pointer_cast<arrow::FixedSizeListArray>(array_);
             auto values = fixed_list_array->values();
@@ -103,9 +122,9 @@ namespace data2cpp {
             width_ = fixed_list_array->list_type()->list_size();
             element_size_ = values->type()->bit_width() / 8;
             element_type_ = values->type()->ToString();
-        } 
+        }
         else {
-            throw std::runtime_error("Column is not a list type array");
+            throw std::runtime_error("Column is not a list type array: " + column_name_ + ". Column type: " + array_->type()->ToString());
         }
 
         std::cout << "row_count_: " << row_count_ << std::endl;

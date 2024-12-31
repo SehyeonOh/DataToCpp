@@ -40,8 +40,16 @@ const uint8_t *Binary2Cpp::GetRawData(int64_t row_index) {
     return raw_data_.data() + (row_index * width_ * element_size_);
 }
 
-int64_t Binary2Cpp::GetRowCount() const {
+int64_t Binary2Cpp::GetRowCount() {
     return row_count_;
+}
+
+int64_t Binary2Cpp::GetWidth() {
+    return width_;
+}
+
+int64_t Binary2Cpp::GetElementSize() {
+    return element_size_;
 }
 
 std::string Binary2Cpp::ToString(bool verbose) {

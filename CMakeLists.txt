@@ -20,6 +20,7 @@ pkg_check_modules(ARROW REQUIRED IMPORTED_TARGET arrow parquet)
 add_library(data2cpp
     data2cpp/parquet/parquet2cpp.cc
     data2cpp/binary/binary2cpp.cc
+    data2cpp/vecs/vecs2cpp.cc
 )
 
 # Set header files and library links

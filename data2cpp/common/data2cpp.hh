@@ -13,13 +13,13 @@ namespace data2cpp {
         virtual int64_t GetWidth() = 0;
         virtual int64_t GetElementSize() = 0;
 
-        virtual std::string ToString(bool verbose = false) = 0;
+        virtual std::string ToString(bool verbose) = 0;
     protected:
         std::string source_file_;
         std::string column_name_;
     };
 
-    // 데이터 접근을 위한 매크로
+    // Data access macro
     #define RAW_DATA(lhs, type, class_ptr, row_index) \
         lhs = reinterpret_cast<const type*>((class_ptr)->GetRawData(row_index))
 
