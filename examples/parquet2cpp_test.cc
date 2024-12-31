@@ -12,8 +12,9 @@ int main(int argc, char* argv[]) {
         std::string file_path = argv[1];
         std::string column_name = argv[2];
         
+        std::vector<std::string> file_paths = {file_path};
         // Create Parquet2Cpp object
-        data2cpp::Parquet2Cpp parquet_reader(file_path, column_name);
+        data2cpp::Parquet2Cpp parquet_reader(file_paths, column_name);
         
         // Print data information
         std::cout << "Parquet File Information:" << std::endl;

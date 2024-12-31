@@ -59,7 +59,11 @@ int64_t Binary2Cpp::GetElementSize() {
 std::string Binary2Cpp::ToString(bool verbose) {
     std::stringstream ss;
     ss << "Binary2Cpp" << std::endl;
-    ss << "  source_file: " << source_file_ << std::endl;
+    ss << "  source_files: ";
+    for (const auto& file : source_files_) {
+        ss << file << " ";
+    }
+    ss << std::endl;
     ss << "  width: " << width_ << std::endl;
     ss << "  element_size: " << element_size_ << std::endl;
     ss << "  skip_bytes: " << skip_bytes_ << std::endl;

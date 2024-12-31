@@ -14,6 +14,7 @@ namespace data2cpp {
     class Parquet2Cpp : public Data2Cpp {
     public:
         Parquet2Cpp(std::string source_file, std::string column_name);
+        Parquet2Cpp(const std::vector<std::string>& source_files, std::string column_name);
         ~Parquet2Cpp() = default;
 
         const uint8_t *GetRawData(int64_t row_index = 0) override;

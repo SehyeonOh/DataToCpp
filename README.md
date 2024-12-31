@@ -12,8 +12,15 @@ A library for easily reading data files in C++ programs.
 ### Parquet File
     #include "data2cpp/parquet/parquet2cpp.hh"
 
-    // Load data from parquet file
-    auto data = std::make_shared<data2cpp::Parquet2Cpp>("example.parquet", "column_name");
+    // Load data from parquet file(s)
+    // Single file
+    auto data = std::make_shared<data2cpp::Parquet2Cpp>(std::vector<std::string>{"example.parquet"}, "column_name");
+
+    // Multiple files (data will be concatenated in order)
+    auto data_multi = std::make_shared<data2cpp::Parquet2Cpp>(
+        std::vector<std::string>{"example1.parquet", "example2.parquet", "example3.parquet"}, 
+        "column_name"
+    );
 
     // Option 1: Get raw data if you need to handle the original data type
     const uint8_t* raw_data = data->GetRawData();

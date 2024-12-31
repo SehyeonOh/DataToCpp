@@ -80,19 +80,33 @@ namespace data2cpp {
         return record_batch;
     }
 
-    Parquet2Cpp::Parquet2Cpp(std::string source_file, std::string column_name) : Data2Cpp(source_file, column_name)
+    Parquet2Cpp::Parquet2Cpp(const std::vector<std::string>& source_files, std::string column_name) 
+        : Data2Cpp(source_files[0], column_name)  // Initialize base class with first file
     {
-        table_ = ParquetToArrowTable(source_file);
+        std::vector<std::shared_ptr<arrow::Table>> tables;
+        
+        // Load tables from each file
+        for (const auto& file : source_files) {
+            tables.push_back(ParquetToArrowTable(file));
+        }
+        
+        // Concatenate all tables
+        auto combined_table_result = arrow::ConcatenateTables(tables);
+        if (!combined_table_result.ok()) {
+            throw std::runtime_error("Failed to concatenate tables: " + combined_table_result.status().ToString());
+        }
+        table_ = combined_table_result.ValueOrDie();
+
         batch_ = ArrowTableToSingleRecordBatch(table_);
         array_ = batch_->GetColumnByName(column_name_);
 
         if (array_ == nullptr) {
             std::stringstream ss;
-            ss << "Columns: " ;
+            ss << "Columns: ";
             for (int i = 0; i < batch_->num_columns(); i++) {
                 ss << batch_->column_name(i) << " ";
             }
-            throw std::runtime_error("Column not found in the Parquet file: " + column_name_ + ". Columns: " + ss.str());
+            throw std::runtime_error("Column not found in the Parquet files: " + column_name_ + ". Columns: " + ss.str());
         }
 
         // Check if the column is a list type
@@ -135,7 +149,11 @@ namespace data2cpp {
     {
         std::stringstream ss;
         ss << "Parquet2Cpp" << std::endl;
-        ss << "  source_file: " << source_file_ << std::endl;
+        ss << "  source_files: ";
+        for (const auto& file : source_files_) {
+            ss << file << " ";
+        }
+        ss << std::endl;
         ss << "  column_name: " << column_name_ << std::endl;
         ss << "  row_count: " << row_count_ << std::endl;
         ss << "  width: " << width_ << std::endl;
