@@ -135,12 +135,12 @@ namespace data2cpp {
     {
         std::stringstream ss;
         ss << "Parquet2Cpp" << std::endl;
-        ss << "source_file_: " << source_file_ << std::endl;
-        ss << "column_name_: " << column_name_ << std::endl;
-        ss << "row_count_: " << row_count_ << std::endl;
-        ss << "width_: " << width_ << std::endl;
-        ss << "data_type_: " << array_->type()->ToString() << std::endl;
-        ss << "element_size_: " << element_size_ << std::endl;
+        ss << "  source_file: " << source_file_ << std::endl;
+        ss << "  column_name: " << column_name_ << std::endl;
+        ss << "  row_count: " << row_count_ << std::endl;
+        ss << "  width: " << width_ << std::endl;
+        ss << "  data_type: " << array_->type()->ToString() << std::endl;
+        ss << "  element_size: " << element_size_ << std::endl;
         return ss.str();
     }
 

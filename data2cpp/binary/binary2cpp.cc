@@ -58,11 +58,12 @@ int64_t Binary2Cpp::GetElementSize() {
 
 std::string Binary2Cpp::ToString(bool verbose) {
     std::stringstream ss;
-    ss << "Binary2Cpp: " << source_file_ << "\n"
-       << "  width: " << width_ << "\n"
-       << "  element_size: " << element_size_ << "\n"
-       << "  skip_bytes: " << skip_bytes_ << "\n"
-       << "  rows: " << row_count_;
+    ss << "Binary2Cpp" << std::endl;
+    ss << "  source_file: " << source_file_ << std::endl;
+    ss << "  width: " << width_ << std::endl;
+    ss << "  element_size: " << element_size_ << std::endl;
+    ss << "  skip_bytes: " << skip_bytes_ << std::endl;
+    ss << "  rows: " << row_count_;
     return ss.str();
 }
 

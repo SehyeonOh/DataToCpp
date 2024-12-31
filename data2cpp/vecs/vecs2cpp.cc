@@ -72,11 +72,12 @@ int64_t Vecs2Cpp::GetElementSize() {
 
 std::string Vecs2Cpp::ToString(bool verbose) {
     std::stringstream ss;
-    ss << "Vecs2Cpp: " << source_file_ << "\n"
-       << "  width: " << width_ << "\n"
-       << "  element_type: " << element_type_ << "\n"
-       << "  element_size: " << element_size_ << "\n"
-       << "  rows: " << row_count_;
+    ss << "Vecs2Cpp" << std::endl;
+    ss << "  source_file: " << source_file_ << std::endl;
+    ss << "  width: " << width_ << std::endl;
+    ss << "  element_type: " << element_type_ << std::endl;
+    ss << "  element_size: " << element_size_ << std::endl;
+    ss << "  rows: " << row_count_;
     return ss.str();
 }
 
