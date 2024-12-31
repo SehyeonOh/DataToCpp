@@ -128,10 +128,7 @@ namespace data2cpp {
         }
 
         SetFloatData(raw_data_);
-        std::cout << "row_count_: " << row_count_ << std::endl;
-        std::cout << "width_: " << width_ << std::endl;
-        std::cout << "element_size_: " << element_size_ << std::endl;
-        std::cout << "element_type_: " << element_type_ << std::endl;
+        std::cout << ToString(true) << std::endl;
     }
 
     std::string Parquet2Cpp::ToString(bool verbose)

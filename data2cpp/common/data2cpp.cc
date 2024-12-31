@@ -1,5 +1,6 @@
 #include "data2cpp.hh"
 #include <stdexcept>
+#include <iostream>
 
 namespace data2cpp {
     const float *Data2Cpp::GetFloatData(int64_t row_index) {
@@ -13,6 +14,7 @@ namespace data2cpp {
             for (int64_t i = 0; i < GetRowCount() * GetWidth(); i++) {
                 temp_data[i] = static_cast<float>(double_data[i]);
             }
+            std::cout << "double data is converted to float data" << std::endl;
             float_data_ = temp_data;
             owns_data_ = true;
         } else if (GetElementSize() == sizeof(float)) {

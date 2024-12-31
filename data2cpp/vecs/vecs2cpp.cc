@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <iostream>
 
 namespace data2cpp {
 
@@ -47,6 +48,7 @@ Vecs2Cpp::Vecs2Cpp(const std::string &source_file, const std::string &element_ty
     }
     file.close();
     SetFloatData(raw_data_.data());
+    std::cout << ToString(true) << std::endl;
 }
 
 const uint8_t *Vecs2Cpp::GetRawData(int64_t row_index) {

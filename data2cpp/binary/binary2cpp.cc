@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <iostream>
 
 namespace data2cpp {
 
@@ -33,6 +34,7 @@ Binary2Cpp::Binary2Cpp(const std::string &source_file, int64_t width, int64_t el
     file.read(reinterpret_cast<char*>(raw_data_.data()), available_size);
     file.close();
     SetFloatData(raw_data_.data());
+    std::cout << ToString(true) << std::endl;
 }
 
 const uint8_t *Binary2Cpp::GetRawData(int64_t row_index) {
