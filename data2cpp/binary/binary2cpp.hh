@@ -17,7 +17,6 @@ namespace data2cpp {
 
         std::string ToString(bool verbose) override;
     private:
-        std::string source_file_;
         std::vector<uint8_t> raw_data_;
         int64_t width_;
         int64_t element_size_;
