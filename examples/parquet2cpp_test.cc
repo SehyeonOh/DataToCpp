@@ -31,6 +31,18 @@ int main(int argc, char* argv[]) {
             std::cout << data10[i] << " ";
         }
         std::cout << std::endl;
+        auto float_data = parquet_reader.GetFloatData();
+        std::cout << "float_data: " << std::endl;
+        for (int64_t i = 0; i < parquet_reader.GetWidth(); i++) {
+            std::cout << float_data[i] << " ";
+        }
+        std::cout << std::endl;
+        auto float_data10 = parquet_reader.GetFloatData(10);
+        std::cout << "float_data10: " << std::endl;
+        for (int64_t i = 0; i < parquet_reader.GetWidth(); i++) {
+            std::cout << float_data10[i] << " ";
+        }
+        std::cout << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "Error occurred: " << e.what() << std::endl;
         return 1;

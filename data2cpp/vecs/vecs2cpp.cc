@@ -45,6 +45,8 @@ Vecs2Cpp::Vecs2Cpp(const std::string &source_file, const std::string &element_ty
         file.read(reinterpret_cast<char*>(raw_data_.data() + i * width_ * element_size_), 
                  width_ * element_size_);
     }
+    file.close();
+    SetFloatData(raw_data_.data());
 }
 
 const uint8_t *Vecs2Cpp::GetRawData(int64_t row_index) {

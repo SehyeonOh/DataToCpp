@@ -31,6 +31,8 @@ Binary2Cpp::Binary2Cpp(const std::string &source_file, int64_t width, int64_t el
     // Read data
     raw_data_.resize(available_size);
     file.read(reinterpret_cast<char*>(raw_data_.data()), available_size);
+    file.close();
+    SetFloatData(raw_data_.data());
 }
 
 const uint8_t *Binary2Cpp::GetRawData(int64_t row_index) {

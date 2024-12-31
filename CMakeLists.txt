@@ -18,6 +18,7 @@ pkg_check_modules(ARROW REQUIRED IMPORTED_TARGET arrow parquet)
 
 # Set library source files
 add_library(data2cpp
+    data2cpp/common/data2cpp.cc
     data2cpp/parquet/parquet2cpp.cc
     data2cpp/binary/binary2cpp.cc
     data2cpp/vecs/vecs2cpp.cc

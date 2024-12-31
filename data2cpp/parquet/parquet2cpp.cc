@@ -127,6 +127,7 @@ namespace data2cpp {
             throw std::runtime_error("Column is not a list type array: " + column_name_ + ". Column type: " + array_->type()->ToString());
         }
 
+        SetFloatData(raw_data_);
         std::cout << "row_count_: " << row_count_ << std::endl;
         std::cout << "width_: " << width_ << std::endl;
         std::cout << "element_size_: " << element_size_ << std::endl;

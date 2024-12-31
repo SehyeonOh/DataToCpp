@@ -12,14 +12,34 @@ A library for easily reading data files in C++ programs.
 ### Parquet File
     #include "data2cpp/parquet/parquet2cpp.hh"
 
-    data2cpp::Parquet2Cpp data("example.parquet");
-    const uint8_t* raw_data = data.GetRawData();
+    // Load data from parquet file
+    auto data = std::make_shared<data2cpp::Parquet2Cpp>("example.parquet", "column_name");
+
+    // Option 1: Get raw data if you need to handle the original data type
+    const uint8_t* raw_data = data->GetRawData();
+
+    // Option 2: Get float array if you need normalized float array
+    // (automatically converts both float and double data to float array)
+    const float* float_data = data->GetFloatData();
+
+    // Get data information
+    int64_t rows = data->GetRowCount();
+    int64_t width = data->GetWidth();
+    int64_t element_size = data->GetElementSize();
 
 ### Binary File
     #include "data2cpp/binary/binary2cpp.hh"
 
     data2cpp::Binary2Cpp data("example.bin", width, element_size, skip_bytes);
+    // Option 1: Get raw data if you need to handle the original data type
     const uint8_t* raw_data = data.GetRawData();
+    // Option 2: Get float array if you need normalized float array
+    const float* float_data = data.GetFloatData();
+
+    // Get data information
+    int64_t rows = data->GetRowCount();
+    int64_t width = data->GetWidth();
+    int64_t element_size = data->GetElementSize();
 
 ### Vecs File (ivecs/fvecs)
     #include "data2cpp/vecs/vecs2cpp.hh"
@@ -30,12 +50,17 @@ A library for easily reading data files in C++ programs.
 
     // For fvecs file
     data2cpp::Vecs2Cpp data("example.fvecs", "float");
-    const uint8_t* raw_data = data.GetRawData();
+    const float* float_data = data.GetFloatData();
+
+    // Get data information
+    int64_t rows = data->GetRowCount();
+    int64_t width = data->GetWidth();
+    int64_t element_size = data->GetElementSize();
 
 ## Test Program Usage
 
 ### Parquet Test
-    ./parquet2cpp_test example.parquet
+    ./parquet2cpp_test example.parquet column_name
 
 ### Binary Test
     ./binary2cpp_test example.bin width element_size skip_bytes
@@ -49,3 +74,11 @@ A library for easily reading data files in C++ programs.
     cd build
     cmake ..
     make 
+
+## Supported Data Types
+- List<float>
+- List<double>
+- LargeList<float>
+- LargeList<double>
+- FixedSizeList<float>
+- FixedSizeList<double> 
